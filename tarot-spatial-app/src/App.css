@@ -1,76 +1,361 @@
-/* ─── T0.5 Spike 验证页样式 ─── */
-.spike-shell {
+/* ─── 塔罗 3D 空间应用样式 ─── */
+.tarot-shell {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100svh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 48px;
-  padding: 48px 24px;
+  gap: clamp(14px, 3svh, 28px);
+  padding: clamp(16px, 3svh, 28px) 24px clamp(20px, 4svh, 44px);
   box-sizing: border-box;
-  background: radial-gradient(circle at 50% 30%, #1a1438 0%, #07060f 70%);
-  color: #f3ecff;
+  background: radial-gradient(circle at 50% 22%, #241a4d 0%, #0c0a1c 60%, #050410 100%);
+  color: #efe7ff;
   font-family: system-ui, -apple-system, "PingFang SC", sans-serif;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-.spike-panel {
-  max-width: 560px;
-  padding: 28px 32px;
-  border-radius: 18px;
-  background: rgba(40, 30, 80, 0.55);
-  border: 1px solid rgba(180, 150, 255, 0.3);
+/* ── 进度指示 ── */
+.progress-steps {
+  display: flex;
+  gap: 20px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(40, 30, 80, 0.4);
+  border: 1px solid rgba(170, 140, 255, 0.22);
+}
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.4;
+  font-size: 14px;
+}
+.progress-step.active {
+  opacity: 1;
+}
+.progress-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #8f7bd6;
+}
+.progress-step.active .progress-dot {
+  background: #d9b8ff;
+  box-shadow: 0 0 10px #b78bff;
 }
 
-.spike-panel h1 {
-  margin: 0 0 12px;
-  font-size: 26px;
-  letter-spacing: 0.06em;
-  color: #e9d9ff;
-}
-
-.hint {
-  margin: 0 0 20px;
-  font-size: 15px;
-  color: #b8a9e0;
-}
-
-.checklist {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* ── 数字人 + 云朵 ── */
+.avatar-zone {
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+}
+.avatar-host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.avatar-figure {
+  width: clamp(82px, 14svh, 120px);
+  height: clamp(82px, 14svh, 120px);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 40%, #4a3a8a, #241a4d);
+  border: 1px solid rgba(190, 160, 255, 0.4);
+  box-shadow: 0 0 40px -8px rgba(170, 120, 255, 0.6);
+}
+.avatar-face {
+  font-size: clamp(38px, 7svh, 54px);
+}
+.avatar-caption {
+  font-size: 13px;
+  color: #b6a6e0;
+  letter-spacing: 0.18em;
+}
+
+/* ── 云朵结果面板 ── */
+.result-cloud {
+  position: relative;
+  max-width: 420px;
+  min-width: 280px;
+  padding: clamp(14px, 2.2svh, 20px) 24px;
+  border-radius: 26px;
+  background: rgba(245, 240, 255, 0.95);
+  color: #2a2050;
+  box-shadow: 0 14px 40px -12px rgba(120, 80, 220, 0.55);
+}
+.cloud-tail {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 22px;
+  height: 22px;
+  background: rgba(245, 240, 255, 0.95);
+  border-radius: 6px;
+}
+.cloud-body {
+  position: relative;
+  z-index: 1;
+}
+.cloud-domain {
+  font-size: 13px;
+  color: #8a6fd0;
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+.cloud-card-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #3a2a78;
+  margin-bottom: 10px;
+}
+.cloud-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.cloud-kw {
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(140, 110, 220, 0.16);
+  color: #5a44a0;
+}
+.cloud-meaning {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #3d3360;
+  margin-bottom: 10px;
+}
+.cloud-advice {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6a4db0;
+  font-weight: 600;
+}
+.cloud-hint {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4a3d80;
+  text-align: center;
+  margin: 0;
+}
+
+/* ── 桌面区域 ── */
+.table-stage {
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  min-height: clamp(300px, 45svh, 420px);
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+}
+.table-top {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 120px;
+  border-radius: 50% / 60px;
+  background: linear-gradient(180deg, #4a3578 0%, #2a1d54 100%);
+  box-shadow: 0 -8px 40px -10px rgba(150, 100, 240, 0.4);
+  border-top: 1px solid rgba(200, 170, 255, 0.3);
+  pointer-events: none;
+}
+
+.stage-center {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+.stage-tip {
+  font-size: 15px;
+  color: #c5b6ec;
+  letter-spacing: 0.08em;
+}
+
+/* ── 领域选择面板 ── */
+.domain-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 28px;
+  border-radius: 20px;
+  background: rgba(45, 34, 90, 0.5);
+  border: 1px solid rgba(180, 150, 255, 0.28);
+}
+.domain-title {
+  margin: 0;
+  font-size: 20px;
+  color: #e3d4ff;
+  letter-spacing: 0.06em;
+}
+.domain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
-
-.checklist li {
-  font-size: 17px;
-  line-height: 1.5;
-}
-
-.checklist strong {
-  color: #d4b8ff;
-}
-
-.spike-card {
-  width: 220px;
-  height: 360px;
+.domain-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 96px;
+  padding: 16px 10px;
   border-radius: 16px;
-  overflow: hidden;
+  background: rgba(70, 54, 130, 0.5);
+  border: 1px solid rgba(180, 150, 255, 0.25);
+  color: #efe7ff;
   cursor: pointer;
-  box-shadow: 0 0 40px -10px rgba(180, 140, 255, 0.6);
+  transition: transform 0.15s ease;
+}
+.domain-item:hover {
+  transform: translateY(-3px);
+  background: rgba(95, 72, 168, 0.6);
+}
+.domain-emoji {
+  font-size: 30px;
+}
+.domain-name {
+  font-size: 15px;
+  letter-spacing: 0.1em;
+}
+
+/* ── 牌堆 ── */
+.card-deck-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1.6svh, 14px);
+  padding-bottom: 8px;
+  transform: translateZ(48px);
+}
+.card-deck {
+  position: relative;
+  width: clamp(104px, 16svh, 130px);
+  height: clamp(160px, 25svh, 200px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+.card-deck:disabled {
+  cursor: default;
+}
+.shuffle-hint {
+  font-size: clamp(13px, 1.8svh, 15px);
+  color: #d7c8ff;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-shadow: 0 0 12px rgba(80, 45, 150, 0.9);
+}
+.deck-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(100px, 15.4svh, 124px);
+  height: clamp(154px, 24.2svh, 194px);
+  border-radius: 12px;
+  background: linear-gradient(160deg, #2a1f55, #160f33);
+  border: 1px solid rgba(190, 160, 255, 0.35);
+  display: grid;
+  place-items: center;
+}
+.deck-mark {
+  color: rgba(200, 170, 255, 0.5);
+  font-size: 26px;
+}
+
+/* ── 卡牌（JS 翻牌） ── */
+.tarot-card {
+  width: 200px;
+  height: 320px;
+  border-radius: 14px;
+  cursor: pointer;
   transform-origin: center center;
 }
-
-.spike-card-img {
+.tarot-card-face {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 0 36px -10px rgba(180, 140, 255, 0.7);
+}
+.tarot-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+.tarot-card-back {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(160deg, #2a1f55, #160f33);
+  border: 1px solid rgba(190, 160, 255, 0.4);
+}
+.tarot-card-back-mark {
+  font-size: 48px;
+  color: rgba(200, 170, 255, 0.6);
+}
+.draw-pile {
+  cursor: pointer;
+}
 
-.tap-tip {
+/* ── 仪式按钮 ── */
+.ritual-btn {
+  position: relative;
+  z-index: 3;
+  padding: clamp(10px, 1.8svh, 12px) clamp(36px, 8vw, 54px);
+  border-radius: 999px;
+  border: 1px solid rgba(200, 170, 255, 0.5);
+  background: linear-gradient(135deg, #6a4db0, #8f5fd6);
+  color: #fff;
   font-size: 16px;
-  color: #c9b8f0;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -8px rgba(150, 90, 230, 0.7);
+  transform: translateZ(64px);
+}
+.shuffle-btn {
+  min-width: 156px;
+}
+.shuffle-btn-primary {
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+    0 0 22px rgba(190, 140, 255, 0.45),
+    0 10px 28px -8px rgba(150, 90, 230, 0.85);
+}
+.ritual-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.reset-btn {
+  margin-top: 4px;
 }
